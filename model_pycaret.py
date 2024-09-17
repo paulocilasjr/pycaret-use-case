@@ -1,14 +1,24 @@
 import sys
+import os
 import time
 import pandas as pd
 import numpy as np
 from pycaret.classification import *
+
+
+# Check if the folder exists
+folder_name = 'pycaret_outputs'
+if not os.path.exists(folder_name):
+    # Create the folder if it doesn't exist
+    os.makedirs(folder_name)
 
 def TruncateValues (dataframe):
     # Truncate extreme values
     dataframe['TMB'] = dataChowell_Train['TMB'].clip(upper=50)
     dataframe['Age'] = dataChowell_Train['Age'].clip(upper=85)
     dataframe['NLR'] = dataChowell_Train['NLR'].clip(upper=25)
+
+    return dataframe
 
 start_time = time.time()
 
@@ -31,7 +41,7 @@ print(f'Chowell patient number (training): {dataChowell_Train.shape[0]}')
 
 # Train the final model using the entire training dataset
 print("Training on the full dataset...")
-setup(data=dataChowell_Train, target=phenoNA, session_id=randomSeed, normalize=True, feature_selection=False)
+setup(data=dataChowell_Train, target=phenoNA, session_id=randomSeed, normalize=True, feature_selection=False, use_gpu=True)
 
 LLR6_model = create_model('lr', penalty='elasticnet', solver='saga', l1_ratio=1, class_weight='balanced', C=0.1)
 print("model created")
