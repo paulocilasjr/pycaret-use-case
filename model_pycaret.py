@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 from pycaret.classification import *
 
+import json
 
 # Check if the folder exists
 folder_name = 'pycaret_outputs'
@@ -19,6 +20,45 @@ def TruncateValues (dataframe):
     dataframe['NLR'] = dataChowell_Train['NLR'].clip(upper=25)
 
     return dataframe
+
+def BuildJSON(df):
+    folds_json = {
+            "training": {
+                "folds": {}
+            }
+    }
+
+    for fold in range(len(df)-2):
+        folds_json['training']['folds'][f"fold_{fold}"] = {
+        "Accuracy": df['Accuracy'][fold],
+        "AUC": df['AUC'][fold],
+        "Recall": df['Recall'][fold],
+        "Precision": df['Prec.'][fold],
+        "F1": df['F1'][fold],
+        "Kappa": df['Kappa'][fold],
+        "MCC": df['MCC'][fold]
+    }
+    # Include Mean and Std as separate sections
+    folds_json["training"]["mean"] = {
+        "Accuracy": df['Accuracy'].iloc[-2],
+        "AUC": df['AUC'].iloc[-2],
+        "Recall": df['Recall'].iloc[-2],
+        "Precision": df['Prec.'].iloc[-2],
+        "F1": df['F1'].iloc[-2],
+        "Kappa": df['Kappa'].iloc[-2],
+        "MCC": df['MCC'].iloc[-2]
+    }
+    folds_json["training"]["std"] = {
+        "Accuracy": df['Accuracy'].iloc[-1],
+        "AUC": df['AUC'].iloc[-1],
+        "Recall": df['Recall'].iloc[-1],
+        "Precision": df['Prec.'].iloc[-1],
+        "F1": df['F1'].iloc[-1],
+        "Kappa": df['Kappa'].iloc[-1],
+        "MCC": df['MCC'].iloc[-1]
+    }
+
+    return json.dumps(folds_json, indent=4)
 
 start_time = time.time()
 
@@ -49,6 +89,13 @@ print("model created")
 # Tune the final model on the entire dataset
 tuned_LLR6_model = tune_model(LLR6_model, n_iter=1000, optimize='AUC')
 print("Done tune")
+
+results = pull()
+json_result = BuildJSON(results)
+print (f'JSON: {json_result}')
+
+#metrics = get_metrics()
+#print(f'metrics: {metrics}')
 
 # Save the final model trained on the entire dataset
 save_model(tuned_LLR6_model, f'./pycaret_outputs/LLR_full_pancancer_model')
