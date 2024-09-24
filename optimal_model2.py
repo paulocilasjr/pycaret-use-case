@@ -81,28 +81,14 @@ print(f'Chowell patient number (training): {dataChowell_Train.shape[0]}')
 
 # Train the final model using the entire training dataset
 print("Training on the full dataset...")
+setup(data=dataChowell_Train, target=phenoNA, session_id=randomSeed, use_gpu=True)
 
-setup(data=dataChowell_Train, target=phenoNA, session_id=randomSeed, normalize=True, feature_selection=False, use_gpu=True)
-
-LLR6_model = create_model('lr', penalty='elasticnet', solver='saga', l1_ratio=1, class_weight='balanced', C=0.1)
+model = compare_models()
 print("model created")
 
 # Tune the final model on the entire dataset
-tuned_LLR6_model = tune_model(LLR6_model, n_iter=1000, optimize='AUC')
-
+tuned_model = tune_model(model)
 print("Done tune")
-
-#results = pull()
-#json_result = BuildJSON(results)
-#print (f'JSON: {json_result}')
-
-#metrics = get_metrics()
-#print(f'metrics: {metrics}')
-
-# Save the final model trained on the entire dataset
-save_model(tuned_LLR6_model, f'./pycaret_outputs/LLR_full_pancancer_model')
-
-print("################################")
 
 # Load and preprocess the test data (Chowell_test)
 dataChowell_Test = pd.read_excel(dataALL_fn, sheet_name='Chowell_test', index_col=0)
@@ -112,15 +98,11 @@ dataChowell_Test = TruncateValues(dataChowell_Test)
 dataChowell_Test = dataChowell_Test[featuresNA + [phenoNA]]
 
 # Predict on the external test data using the final tuned model
-predictions_df = predict_model(tuned_LLR6_model, data=dataChowell_Test)
+predictions_df = predict_model(tuned_model, data=dataChowell_Test)
 
 # Evaluation of the prediction 
 print ('Starting evaluation of the prediction')
 # Dashboard function
-dashboard(tuned_LLR6_model, display_format='inline')
-
-# Save the predictions
-predictions_df.to_csv(f'./pycaret_outputs/LLR6_pan_predictions.csv', index=False)
-print(f'Predictions saved')
+dashboard(tuned_model, display_format='inline')
 
 print(f'All done! Time used: {time.time() - start_time}')
