@@ -35,11 +35,15 @@ dataChowell_Train = truncate_values(dataChowell_Train)
 
 print(f'Chowell patient number (training): {dataChowell_Train.shape[0]}')
 
+# Configure RepeatedStratifiedKFold for 5 folds and 2000 repeats
+cv_strategy = RepeatedStratifiedKFold(n_splits=5, n_repeats=2000, random_state=42)
+
 # Train the final model using the entire training dataset
 print("Training on the full dataset...")
 setup(data=dataChowell_Train,
       target=phenoNA,
-      session_id=randomSeed)
+      session_id=randomSeed,
+      fold_strategy=cv_strategy)
 
 model = create_model('lr')
 print(model)
