@@ -60,6 +60,7 @@ print(best_model)
 tuned_best_model = tune_model(best_model, optimize='AUC')
 print(tuned_best_model)
 print("Done tune")
+plot_model(tuned_best_model, plot='feature')
 
 # Load and preprocess the test data (Chowell_test)
 dataChowell_Test = pd.read_excel(dataALL_fn, sheet_name='Chowell_test', index_col=0)
