@@ -39,6 +39,11 @@ setup(data=dataChowell_Train,
           feature_selection=False)
 
 model = create_model('lr', penalty='elasticnet', solver='saga', l1_ratio=1, class_weight='balanced', C=0.1, max_iter=100)
-#tuned_model = tune_model(model, early_stopping_max_iters=100, optimize='AUC')
+
+plot_model(model, plot='feature')
+
 predictions_chowell_Test_df = predict_model(model, data=dataChowell_Test)
+plot_model(model, plot='auc')
+
 predictions_MSK1_df = predict_model(model, data=MSK1_Test)
+plot_model(model, plot='auc')
