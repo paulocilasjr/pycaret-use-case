@@ -1,6 +1,5 @@
 import pandas as pd
 from pycaret.classification import *
-from sklearn.metrics import roc_auc_score
 
 def truncate_values(dataframe):
     '''Truncate extreme values for TMB, Age, and NLR'''
