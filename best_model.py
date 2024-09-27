@@ -43,7 +43,5 @@ model = create_model('lr', penalty='elasticnet', solver='saga', l1_ratio=1, clas
 plot_model(model, plot='feature')
 
 predictions_chowell_Test_df = predict_model(model, data=dataChowell_Test)
-plot_model(model, plot='auc')
 
 predictions_MSK1_df = predict_model(model, data=MSK1_Test)
-plot_model(model, plot='auc')
