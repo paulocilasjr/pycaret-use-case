@@ -16,7 +16,7 @@ featuresNA = ['TMB', 'Systemic_therapy_history',
 # Load and preprocess training data
 DATALL = './dataset/AllData.xlsx'
 
-# Load tab and select feature columns
+# Load and preprocess the test data (Chowell_train)
 dataChowell_Train = pd.read_excel(DATALL, sheet_name='Chowell_train', index_col=0)
 dataChowell_Train = dataChowell_Train[featuresNA + ['Response']]
 dataChowell_Train = truncate_values(dataChowell_Train)
@@ -27,7 +27,7 @@ dataChowell_Test = truncate_values(dataChowell_Test)
 # Ensure the test data has the same feature set
 dataChowell_Test = dataChowell_Test[featuresNA + ['Response']]
 
-# Load and preprocess the test data (Chowell_test)
+# Load and preprocess the test data (MSK1)
 MSK1_Test = pd.read_excel(DATALL, sheet_name='MSK1', index_col=0)
 MSK1_Test = truncate_values(MSK1_Test)
 # Ensure the test data has the same feature set
