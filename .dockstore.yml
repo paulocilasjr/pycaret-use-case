@@ -1,5 +1,5 @@
 version: 1.2
 notebooks:
   - name: preprocessing
-    path: ./LORIS/preprocessing_data.ipynb
+    path: /LORIS/preprocessing_data.ipynb
     topic: LORIS raw data preprocessing from Chang et al. 2024 article.
