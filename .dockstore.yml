@@ -6,14 +6,10 @@ notebooks:
     authors:
       - name: Paulo Lyra-Jr
         email: paulocilas.moraislyra@moffitt.org
-        name: Jeremy Goecks
-        email: jeremy.goecks@moffitt.org
 workflows:
-  - subclass: GALAXY 
+  - subclass: GALAXY
     primaryDescriptorPath: /LORIS/galaxy_workflow/Galaxy-ML2-LORIS_model.ga
     topic: LORIS model (Chang et al., 2024) Reproducibility using Galaxy-ML tools
     authors:
       - name: Paulo Lyra-Jr
         email: paulocilas.moraislyra@moffitt.org
-        name: Jeremy Goecks
-        email: jeremy.goecks@moffitt.org
