@@ -1,5 +1,0 @@
-version: 1.2
-notebooks:
-  - name: preprocessing
-    path: ./preprocessing_data.ipynb
-    topic: LORIS raw data preprocessing
