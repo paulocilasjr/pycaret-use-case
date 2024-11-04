@@ -6,6 +6,14 @@ notebooks:
     authors:
       - name: Paulo Lyra-Jr
         email: paulocilas.moraislyra@moffitt.org
+
+  - format: JUPYTER
+    path: /LORIS/posprocessing.ipynb
+    topic: LORIS model evaluation comparing model metrics from Chang et al. (2024) with Galaxy-ML model metrics.
+    authors:
+      - name: Paulo Lyra-Jr
+        email: paulocilas.moraislyra@moffitt.org
+
 workflows:
   - subclass: GALAXY
     primaryDescriptorPath: /LORIS/galaxy_workflow/Galaxy-ML2-LORIS_model.ga
