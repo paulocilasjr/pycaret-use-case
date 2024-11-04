@@ -9,6 +9,7 @@ notebooks:
 
   - format: JUPYTER
     path: /LORIS/posprocessing.ipynb
+    name: Postprocessing LORIS
     topic: LORIS model evaluation comparing model metrics from Chang et al. (2024) with Galaxy-ML model metrics.
     authors:
       - name: Paulo Lyra-Jr
